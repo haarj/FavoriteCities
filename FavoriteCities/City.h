@@ -7,7 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface City : NSObject
+
+@property (nonatomic) NSString *cityName;
+@property (nonatomic) NSString *cityState;
+@property (nonatomic) UIImage *cityImage;
+
+
+-(instancetype)initWithFullName:(NSString *)name andState:(NSString *)state;
+
 
 @end

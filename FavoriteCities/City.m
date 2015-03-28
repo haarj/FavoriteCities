@@ -10,4 +10,15 @@
 
 @implementation City
 
+-(instancetype) initWithFullName:(NSString *)name andState:(NSString *)state
+{
+    self = [super init];
+    if (self)
+    {
+        self.cityName = name;
+        self.cityState = state;
+    }
+    return self;
+}
+
 @end

@@ -7,7 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "City.h"
+
+@protocol CityTitleMethod <NSObject>
+@required
+-(void) CityDelegateMethod:(UIButton *)sender;
+
+@end
 
 @interface DetailViewController : UIViewController
+
+@property id<CityTitleMethod>delegate;
+@property City *city;
 
 @end

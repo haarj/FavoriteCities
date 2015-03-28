@@ -8,7 +8,9 @@
 
 #import "WikipediaViewController.h"
 
-@interface WikipediaViewController ()
+@interface WikipediaViewController () <UIWebViewDelegate>
+@property (weak, nonatomic) IBOutlet UIWebView *wikiWebView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @end
 
@@ -16,22 +18,46 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
+    if ([self.city.cityName isEqual:@"New York"]) {
+        [self performLoadRequestWithString:@"http://en.wikipedia.org/wiki/New_York_City"];
+    } else if ([self.city.cityName isEqual:@"Miami"]) {
+        [self performLoadRequestWithString:@"http://en.wikipedia.org/wiki/Miami"];
+    } else if ([self.city.cityName isEqual:@"San Francisco"]) {
+        [self performLoadRequestWithString:@"http://en.wikipedia.org/wiki/San_Francisco"];
+    } else if ([self.city.cityName isEqual:@"Las Vegas"]) {
+        [self performLoadRequestWithString:@"http://en.wikipedia.org/wiki/Las_Vegas"];
+    }
+
+    self.activityIndicator.hidesWhenStopped = YES;
+
+
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
+-(void)webViewDidStartLoad:(UIWebView *)webView
+{
+    [self.activityIndicator startAnimating];
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+
+-(void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [self.activityIndicator stopAnimating];
 }
-*/
+
+- (void)performLoadRequestWithString:(NSString *)string
+{
+    NSURL *url = [NSURL URLWithString:string];
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
+    [self.wikiWebView  loadRequest:urlRequest];
+}
+
+
+- (IBAction)dismissButton:(UIButton *)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 @end
